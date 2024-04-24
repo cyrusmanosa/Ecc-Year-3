@@ -1,0 +1,206 @@
+[    4.171205] systemd[1]: modprobe@drm.service: Deactivated successfully.
+[    4.178642] systemd[1]: Finished modprobe@drm.service - Load Kernel Module drm.
+[    4.196190] systemd[1]: Started systemd-journald.service - Journal Service.
+[    4.222781] fuse: init (API version 7.37)
+[    4.245860] device-mapper: core: CONFIG_IMA_DISABLE_HTABLE is disabled. Duplicate IMA measurements will not be recorded in the IMA log.
+[    4.254413] device-mapper: uevent: version 1.0.3
+[    4.300897] systemd-journald[1040]: Received client request to flush runtime journal.
+[    4.309612] loop: module loaded
+[    4.316106] device-mapper: ioctl: 4.47.0-ioctl (2022-07-28) initialised: dm-devel@redhat.com
+[    4.869230] vif vif-0 enX0: renamed from eth0
+[    4.897041] input: Power Button as /devices/LNXSYSTM:00/LNXPWRBN:00/input/input0
+[    4.963530] i8042: PNP: PS/2 Controller [PNP0303:PS2K,PNP0f13:PS2M] at 0x60,0x64 irq 1,12
+[    4.972453] serio: i8042 KBD port at 0x60,0x64 irq 1
+[    4.976928] serio: i8042 AUX port at 0x60,0x64 irq 12
+[    5.000589] ACPI: button: Power Button [PWRF]
+[    5.005162] input: Sleep Button as /devices/LNXSYSTM:00/LNXSLPBN:00/input/input1
+[    5.084572] ACPI: button: Sleep Button [SLPF]
+[    5.116297] SCSI subsystem initialized
+[    5.216060] cryptd: max_cpu_qlen set to 1000
+[    5.301578] zram_generator::config[1844]: zram0: system has too much memory (949MB), limit is 800MB, ignoring.
+[    5.352544] libata version 3.00 loaded.
+[    5.362769] ata_piix 0000:00:01.1: version 2.13
+[    5.376998] AVX2 version of gcm_enc/dec engaged.
+[    5.377019] AES CTR mode by8 optimization enabled
+[    5.380170] scsi host0: ata_piix
+[    5.419188] scsi host1: ata_piix
+[    5.419575] ata1: PATA max MWDMA2 cmd 0x1f0 ctl 0x3f6 bmdma 0xc100 irq 14
+[    5.419577] ata2: PATA max MWDMA2 cmd 0x170 ctl 0x376 bmdma 0xc108 irq 15
+[    5.741098] RPC: Registered named UNIX socket transport module.
+[    5.741102] RPC: Registered udp transport module.
+[    5.741103] RPC: Registered tcp transport module.
+[    5.741103] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    7.492129] cloud-init[2101]: Cloud-init v. 22.2.2 running 'init' at Wed, 17 Apr 2024 01:16:34 +0000. Up 7.40 seconds.
+[    7.660125] cloud-init[2101]: ci-info: ++++++++++++++++++++++++++++++++++++++++Net device info++++++++++++++++++++++++++++++++++++++++
+[    7.677680] cloud-init[2101]: ci-info: +--------+------+------------------------------+-----------------+--------+-------------------+
+[    7.702147] cloud-init[2101]: ci-info: | Device |  Up  |           Address            |       Mask      | Scope  |     Hw-Address    |
+[    7.720274] cloud-init[2101]: ci-info: +--------+------+------------------------------+-----------------+--------+-------------------+
+[    7.740228] cloud-init[2101]: ci-info: |  enX0  | True |          10.0.1.10           | 255.255.255.240 | global | 12:9e:64:06:16:9d |
+[    7.760296] cloud-init[2101]: ci-info: |  enX0  | True | fe80::109e:64ff:fe06:169d/64 |        .        |  link  | 12:9e:64:06:16:9d |
+[    7.780262] cloud-init[2101]: ci-info: |   lo   | True |          127.0.0.1           |    255.0.0.0    |  host  |         .         |
+[    7.793012] cloud-init[2101]: ci-info: |   lo   | True |           ::1/128            |        .        |  host  |         .         |
+[    7.810230] cloud-init[2101]: ci-info: +--------+------+------------------------------+-----------------+--------+-------------------+
+[    7.830237] cloud-init[2101]: ci-info: ++++++++++++++++++++++++++++Route IPv4 info+++++++++++++++++++++++++++++
+[    7.850265] cloud-init[2101]: ci-info: +-------+-------------+----------+-----------------+-----------+-------+
+[    7.870251] cloud-init[2101]: ci-info: | Route | Destination | Gateway  |     Genmask     | Interface | Flags |
+[    7.881395] cloud-init[2101]: ci-info: +-------+-------------+----------+-----------------+-----------+-------+
+[    7.900236] cloud-init[2101]: ci-info: |   0   |   0.0.0.0   | 10.0.1.1 |     0.0.0.0     |    enX0   |   UG  |
+[    7.920243] cloud-init[2101]: ci-info: |   1   |   10.0.0.2  | 10.0.1.1 | 255.255.255.255 |    enX0   |  UGH  |
+[    7.930153] cloud-init[2101]: ci-info: |   2   |   10.0.1.0  | 0.0.0.0  | 255.255.255.240 |    enX0   |   U   |
+[    7.950243] cloud-init[2101]: ci-info: |   3   |   10.0.1.1  | 0.0.0.0  | 255.255.255.255 |    enX0   |   UH  |
+[    7.970244] cloud-init[2101]: ci-info: +-------+-------------+----------+-----------------+-----------+-------+
+[    7.977291] cloud-init[2101]: ci-info: +++++++++++++++++++Route IPv6 info+++++++++++++++++++
+[    7.995522] cloud-init[2101]: ci-info: +-------+-------------+---------+-----------+-------+
+[    8.011863] cloud-init[2101]: ci-info: | Route | Destination | Gateway | Interface | Flags |
+[    8.030295] cloud-init[2101]: ci-info: +-------+-------------+---------+-----------+-------+
+[    8.045647] cloud-init[2101]: ci-info: |   0   |  fe80::/64  |    ::   |    enX0   |   U   |
+[    8.070328] cloud-init[2101]: ci-info: |   2   |    local    |    ::   |    enX0   |   U   |
+[    8.077029] cloud-init[2101]: ci-info: |   3   |  multicast  |    ::   |    enX0   |   U   |
+[    8.090225] cloud-init[2101]: ci-info: +-------+-------------+---------+-----------+-------+
+[    9.343069] cloud-init[2101]: Generating public/private ed25519 key pair.
+[    9.350115] cloud-init[2101]: Your identification has been saved in /etc/ssh/ssh_host_ed25519_key
+[    9.380094] cloud-init[2101]: Your public key has been saved in /etc/ssh/ssh_host_ed25519_key.pub
+[    9.390083] cloud-init[2101]: The key fingerprint is:
+[    9.393616] cloud-init[2101]: SHA256:qS+vIIq+PsgnRInLUWZFlSg70zTD2T4GLCz3A2KMdcU root@ip-10-0-1-10.ec2.internal
+[    9.420237] cloud-init[2101]: The key's randomart image is:
+[    9.437248] cloud-init[2101]: +--[ED25519 256]--+
+[    9.450121] cloud-init[2101]: |o.o *=*..        |
+[    9.458166] cloud-init[2101]: |.= @ XEo         |
+[    9.470174] cloud-init[2101]: |o O O =          |
+[    9.474143] cloud-init[2101]: |.+ + + + .       |
+[    9.502387] cloud-init[2101]: |o.. o o S        |
+[    9.532566] cloud-init[2101]: |.o     .         |
+[    9.566189] cloud-init[2101]: |+ . . .          |
+[    9.587208] cloud-init[2101]: |o= o ...         |
+[    9.606915] cloud-init[2101]: |=+=   .+o        |
+[    9.631465] cloud-init[2101]: +----[SHA256]-----+
+[    9.644341] cloud-init[2101]: Generating public/private ecdsa key pair.
+[    9.653245] cloud-init[2101]: Your identification has been saved in /etc/ssh/ssh_host_ecdsa_key
+[    9.690838] cloud-init[2101]: Your public key has been saved in /etc/ssh/ssh_host_ecdsa_key.pub
+[    9.709467] cloud-init[2101]: The key fingerprint is:
+[    9.730815] cloud-init[2101]: SHA256:rzV8M2GXp+WCkcfNr2hqDuN5SN0dsNu5iW1csRrvJMU root@ip-10-0-1-10.ec2.internal
+[    9.760324] cloud-init[2101]: The key's randomart image is:
+[    9.792260] cloud-init[2101]: +---[ECDSA 256]---+
+[    9.814165] cloud-init[2101]: |                 |
+[    9.822793] cloud-init[2101]: |            .    |
+[    9.845040] cloud-init[2101]: |             o   |
+[    9.873158] cloud-init[2101]: |            .oo= |
+[    9.910873] cloud-init[2101]: |        S. .=+=EB|
+[    9.917153] cloud-init[2101]: |        .o..oB=*o|
+[    9.932876] cloud-init[2101]: |       .o.= ==*=o|
+[    9.956480] cloud-init[2101]: |       ..*ooo=O+ |
+[    9.993147] cloud-init[2101]: |        ++oo..o. |
+[   10.004321] cloud-init[2101]: +----[SHA256]-----+
+[   10.728382] cloud-init[2189]: Cloud-init v. 22.2.2 running 'modules:config' at Wed, 17 Apr 2024 01:16:37 +0000. Up 10.54 seconds.
+[   12.153449] cloud-init[2197]: Cloud-init v. 22.2.2 running 'modules:final' at Wed, 17 Apr 2024 01:16:39 +0000. Up 11.96 seconds.
+[   13.994276] cloud-init[2197]: Amazon Linux 2023 repository                     28 MB/s |  23 MB     00:00
+
+Amazon Linux 2023.4.20240401
+Kernel 6.1.82-99.168.amzn2023.x86_64 on an x86_64 (-)
+
+ip-10-0-1-10 login: [   26.302574] cloud-init[2197]: Amazon Linux 2023 Kernel Livepatch repository   442 kB/s | 165 kB     00:00
+[   27.796916] cloud-init[2197]: Dependencies resolved.
+[   27.830077] cloud-init[2197]: ================================================================================
+[   27.836770] cloud-init[2197]:  Package               Arch     Version                     Repository     Size
+[   27.870125] cloud-init[2197]: ================================================================================
+[   27.876924] cloud-init[2197]: Installing:
+[   27.879679] cloud-init[2197]:  httpd                 x86_64   2.4.58-1.amzn2023           amazonlinux    47 k
+[   27.910114] cloud-init[2197]: Installing dependencies:
+[   27.914187] cloud-init[2197]:  apr                   x86_64   1.7.2-2.amzn2023.0.2        amazonlinux   129 k
+[   27.950128] cloud-init[2197]:  apr-util              x86_64   1.6.3-1.amzn2023.0.1        amazonlinux    98 k
+[   27.956880] cloud-init[2197]:  generic-logos-httpd   noarch   18.0.0-12.amzn2023.0.3      amazonlinux    19 k
+[   27.980119] cloud-init[2197]:  httpd-core            x86_64   2.4.58-1.amzn2023           amazonlinux   1.4 M
+[   28.000142] cloud-init[2197]:  httpd-filesystem      noarch   2.4.58-1.amzn2023           amazonlinux    14 k
+[   28.007344] cloud-init[2197]:  httpd-tools           x86_64   2.4.58-1.amzn2023           amazonlinux    81 k
+[   28.040098] cloud-init[2197]:  libbrotli             x86_64   1.0.9-4.amzn2023.0.2        amazonlinux   315 k
+[   28.046424] cloud-init[2197]:  mailcap               noarch   2.1.49-3.amzn2023.0.3       amazonlinux    33 k
+[   28.080130] cloud-init[2197]: Installing weak dependencies:
+[   28.083837] cloud-init[2197]:  apr-util-openssl      x86_64   1.6.3-1.amzn2023.0.1        amazonlinux    17 k
+[   28.110093] cloud-init[2197]:  mod_http2             x86_64   2.0.11-2.amzn2023           amazonlinux   150 k
+[   28.116798] cloud-init[2197]:  mod_lua               x86_64   2.4.58-1.amzn2023           amazonlinux    61 k
+[   28.140097] cloud-init[2197]: Transaction Summary
+[   28.143929] cloud-init[2197]: ================================================================================
+[   28.163118] cloud-init[2197]: Install  12 Packages
+[   28.168709] cloud-init[2197]: Total download size: 2.3 M
+[   28.180094] cloud-init[2197]: Installed size: 6.9 M
+[   28.183729] cloud-init[2197]: Downloading Packages:
+[   28.198609] cloud-init[2197]: (1/12): apr-util-openssl-1.6.3-1.amzn2023.0.1.x 102 kB/s |  17 kB     00:00
+[   28.221858] cloud-init[2197]: (2/12): apr-1.7.2-2.amzn2023.0.2.x86_64.rpm     760 kB/s | 129 kB     00:00
+[   28.250105] cloud-init[2197]: (3/12): apr-util-1.6.3-1.amzn2023.0.1.x86_64.rp 551 kB/s |  98 kB     00:00
+[   28.256862] cloud-init[2197]: (4/12): generic-logos-httpd-18.0.0-12.amzn2023. 926 kB/s |  19 kB     00:00
+[   28.270101] cloud-init[2197]: (5/12): httpd-2.4.58-1.amzn2023.x86_64.rpm      2.6 MB/s |  47 kB     00:00
+[   28.290095] cloud-init[2197]: (6/12): httpd-filesystem-2.4.58-1.amzn2023.noar 734 kB/s |  14 kB     00:00
+[   28.296535] cloud-init[2197]: (7/12): httpd-tools-2.4.58-1.amzn2023.x86_64.rp 2.7 MB/s |  81 kB     00:00
+[   28.318596] cloud-init[2197]: (8/12): mailcap-2.1.49-3.amzn2023.0.3.noarch.rp 1.4 MB/s |  33 kB     00:00
+[   28.345569] cloud-init[2197]: (9/12): httpd-core-2.4.58-1.amzn2023.x86_64.rpm  14 MB/s | 1.4 MB     00:00
+[   28.360301] cloud-init[2197]: (10/12): libbrotli-1.0.9-4.amzn2023.0.2.x86_64. 3.8 MB/s | 315 kB     00:00
+[   28.387444] cloud-init[2197]: (11/12): mod_http2-2.0.11-2.amzn2023.x86_64.rpm 2.9 MB/s | 150 kB     00:00
+[   28.403314] cloud-init[2197]: (12/12): mod_lua-2.4.58-1.amzn2023.x86_64.rpm   1.3 MB/s |  61 kB     00:00
+[   28.428217] cloud-init[2197]: --------------------------------------------------------------------------------
+[   28.457047] cloud-init[2197]: Total                                           4.9 MB/s | 2.3 MB     00:00
+[   28.700115] cloud-init[2197]: Running transaction check
+[   28.753750] cloud-init[2197]: Transaction check succeeded.
+[   28.780134] cloud-init[2197]: Running transaction test
+[   29.030399] cloud-init[2197]: Transaction test succeeded.
+[   29.035388] cloud-init[2197]: Running transaction
+[   29.350306] cloud-init[2197]:   Preparing        :                                                        1/1
+[   29.372129] cloud-init[2197]:   Installing       : apr-1.7.2-2.amzn2023.0.2.x86_64                       1/12
+[   29.401212] cloud-init[2197]:   Installing       : apr-util-openssl-1.6.3-1.amzn2023.0.1.x86_64          2/12
+[   29.420849] cloud-init[2197]:   Installing       : apr-util-1.6.3-1.amzn2023.0.1.x86_64                  3/12
+[   29.470049] cloud-init[2197]:   Installing       : mailcap-2.1.49-3.amzn2023.0.3.noarch                  4/12
+[   29.510067] cloud-init[2197]:   Installing       : httpd-tools-2.4.58-1.amzn2023.x86_64                  5/12
+[   29.524389] cloud-init[2197]:   Installing       : libbrotli-1.0.9-4.amzn2023.0.2.x86_64                 6/12
+[   29.720166] cloud-init[2197]:   Running scriptlet: httpd-filesystem-2.4.58-1.amzn2023.noarch             7/12
+[   30.327016] cloud-init[2197]:   Installing       : httpd-filesystem-2.4.58-1.amzn2023.noarch             7/12
+[   30.390085] cloud-init[2197]:   Installing       : httpd-core-2.4.58-1.amzn2023.x86_64                   8/12
+[   30.404084] cloud-init[2197]:   Installing       : mod_http2-2.0.11-2.amzn2023.x86_64                    9/12
+[   30.414486] cloud-init[2197]:   Installing       : mod_lua-2.4.58-1.amzn2023.x86_64                     10/12
+[   30.450059] cloud-init[2197]:   Installing       : generic-logos-httpd-18.0.0-12.amzn2023.0.3.noarch    11/12
+[   30.464805] cloud-init[2197]:   Installing       : httpd-2.4.58-1.amzn2023.x86_64                       12/12
+[   31.121581] zram_generator::config[2360]: zram0: system has too much memory (949MB), limit is 800MB, ignoring.
+[   31.971542] cloud-init[2197]:   Running scriptlet: httpd-2.4.58-1.amzn2023.x86_64                       12/12
+[   31.983464] cloud-init[2197]:   Verifying        : apr-1.7.2-2.amzn2023.0.2.x86_64                       1/12
+[   32.006333] cloud-init[2197]:   Verifying        : apr-util-1.6.3-1.amzn2023.0.1.x86_64                  2/12
+[   32.025705] cloud-init[2197]:   Verifying        : apr-util-openssl-1.6.3-1.amzn2023.0.1.x86_64          3/12
+[   32.061664] cloud-init[2197]:   Verifying        : generic-logos-httpd-18.0.0-12.amzn2023.0.3.noarch     4/12
+[   32.081234] cloud-init[2197]:   Verifying        : httpd-2.4.58-1.amzn2023.x86_64                        5/12
+[   32.087835] cloud-init[2197]:   Verifying        : httpd-core-2.4.58-1.amzn2023.x86_64                   6/12
+[   32.132168] cloud-init[2197]:   Verifying        : httpd-filesystem-2.4.58-1.amzn2023.noarch             7/12
+[   32.160558] cloud-init[2197]:   Verifying        : httpd-tools-2.4.58-1.amzn2023.x86_64                  8/12
+[   32.184780] cloud-init[2197]:   Verifying        : libbrotli-1.0.9-4.amzn2023.0.2.x86_64                 9/12
+[   32.191993] cloud-init[2197]:   Verifying        : mailcap-2.1.49-3.amzn2023.0.3.noarch                 10/12
+[   32.231016] cloud-init[2197]:   Verifying        : mod_http2-2.0.11-2.amzn2023.x86_64                   11/12
+[   32.455186] cloud-init[2197]:   Verifying        : mod_lua-2.4.58-1.amzn2023.x86_64                     12/12
+[   32.468935] cloud-init[2197]: Installed:
+[   32.479377] cloud-init[2197]:   apr-1.7.2-2.amzn2023.0.2.x86_64
+[   32.506089] cloud-init[2197]:   apr-util-1.6.3-1.amzn2023.0.1.x86_64
+[   32.512215] cloud-init[2197]:   apr-util-openssl-1.6.3-1.amzn2023.0.1.x86_64
+[   32.530755] cloud-init[2197]:   generic-logos-httpd-18.0.0-12.amzn2023.0.3.noarch
+[   32.544221] cloud-init[2197]:   httpd-2.4.58-1.amzn2023.x86_64
+[   32.570842] cloud-init[2197]:   httpd-core-2.4.58-1.amzn2023.x86_64
+[   32.577330] cloud-init[2197]:   httpd-filesystem-2.4.58-1.amzn2023.noarch
+[   32.600490] cloud-init[2197]:   httpd-tools-2.4.58-1.amzn2023.x86_64
+[   32.612057] cloud-init[2197]:   libbrotli-1.0.9-4.amzn2023.0.2.x86_64
+[   32.632550] cloud-init[2197]:   mailcap-2.1.49-3.amzn2023.0.3.noarch
+[   32.652500] cloud-init[2197]:   mod_http2-2.0.11-2.amzn2023.x86_64
+[   32.670104] cloud-init[2197]:   mod_lua-2.4.58-1.amzn2023.x86_64
+[   32.674544] cloud-init[2197]: Complete!
+[   32.712929] cloud-init[2197]: Created symlink /etc/systemd/system/multi-user.target.wants/httpd.service → /usr/lib/systemd/system/httpd.service.
+[   32.740359] zram_generator::config[3291]: zram0: system has too much memory (949MB), limit is 800MB, ignoring.
+ci-info: +++++++++++++++++++++++++++Authorized keys from /home/ec2-user/.ssh/authorized_keys for user ec2-user++++++++++++++++++++++++++++
+ci-info: +---------+-------------------------------------------------------------------------------------------------+---------+---------+
+ci-info: | Keytype |                                       Fingerprint (sha256)                                      | Options | Comment |
+ci-info: +---------+-------------------------------------------------------------------------------------------------+---------+---------+
+ci-info: | ssh-rsa | 37:b7:3a:8a:a5:45:62:1d:22:0b:76:73:b0:90:a4:33:59:7f:9e:46:9c:98:04:a1:9d:09:3b:9a:11:fa:9c:0b |    -    |  vockey |
+ci-info: +---------+-------------------------------------------------------------------------------------------------+---------+---------+
+<14>Apr 17 01:17:00 cloud-init: #############################################################
+<14>Apr 17 01:17:00 cloud-init: -----BEGIN SSH HOST KEY FINGERPRINTS-----
+<14>Apr 17 01:17:00 cloud-init: 256 SHA256:rzV8M2GXp+WCkcfNr2hqDuN5SN0dsNu5iW1csRrvJMU root@ip-10-0-1-10.ec2.internal (ECDSA)
+<14>Apr 17 01:17:00 cloud-init: 256 SHA256:qS+vIIq+PsgnRInLUWZFlSg70zTD2T4GLCz3A2KMdcU root@ip-10-0-1-10.ec2.internal (ED25519)
+<14>Apr 17 01:17:00 cloud-init: -----END SSH HOST KEY FINGERPRINTS-----
+<14>Apr 17 01:17:00 cloud-init: #############################################################
+-----BEGIN SSH HOST KEY KEYS-----
+ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCfIVOj8Mc2bJEc8b79TzCvhhUlUKKZ+6zlvBV4rf9FD+d8WmZ1rqXBqwf7FFJ55E2bfZ+ZS4ov/cTWcY/NJ24s= root@ip-10-0-1-10.ec2.internal
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP9HkMHj7c2DLtZQI5JjG9bR/maoijwVoznpmWBsRYu4 root@ip-10-0-1-10.ec2.internal
+-----END SSH HOST KEY KEYS-----
+[   33.570290] cloud-init[2197]: Cloud-init v. 22.2.2 finished at Wed, 17 Apr 2024 01:17:00 +0000. Datasource DataSourceEc2.  Up 33.55 seconds
