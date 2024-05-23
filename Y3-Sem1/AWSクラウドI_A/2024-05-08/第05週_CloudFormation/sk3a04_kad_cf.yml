@@ -1,0 +1,105 @@
+#テンプレートのフォーマットのバージョン指定
+AWSTemplateFormatVersion: '2010-09-09'
+
+#テンプレートの説明文
+Description: EC2 instance sample
+
+#入力するパラメータ指定
+Parameters: 
+  KeyPair:
+    Type: AWS::EC2::KeyPair::KeyName 
+    Description: Select KeyPair name.
+  AMI:
+    # Type: 'AWS::SSM::Parameter::Value<String>'
+    # Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2' 
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-minimal-kernel-default-x86_64'
+#リソースの指定
+Resources: 
+  TestVpc:
+    Type: 'AWS::EC2::VPC'
+    Properties: 
+      CidrBlock: '10.2.0.0/16'
+      Tags:
+        - Key: 'Name'
+          Value: 'public_a_vpc'
+  TestSubnet:
+    Type:  'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone: 
+        Fn::Select: 
+          - 0
+          - Fn::GetAZs: ''
+      CidrBlock: '10.2.10.0/24'
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key : 'Name'
+          Value: 'public_sv'
+      VpcId: !Ref TestVpc
+  TestInternetGateway:
+    Type: 'AWS::EC2::InternetGateway'
+    Properties:
+      Tags:
+        - Key : 'Name'
+          Value: 'public_a_gw'
+  TestAttachGateway:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Properties:
+      VpcId: !Ref TestVpc
+      InternetGatewayId: !Ref TestInternetGateway
+  
+  TestRouteTable:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      Tags:
+        - Key : 'Name'
+          Value: 'public_a_rt'
+      VpcId: !Ref TestVpc
+  
+  TestRoute:
+    Type: 'AWS::EC2::Route'
+    DependsOn: TestInternetGateway
+    Properties:
+      RouteTableId: !Ref TestRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref TestInternetGateway
+
+  TestSubnetRouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties: 
+      SubnetId: !Ref TestSubnet
+      RouteTableId: !Ref TestRouteTable
+
+  TestSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "TestSecurityGroup"
+      VpcId: !Ref TestVpc
+      Tags:
+        - Key: 'Name'
+          Value: 'public_a-sg'
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '22'
+        ToPort: '22'
+        CidrIp: 0.0.0.0/0 
+
+  TestInstance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !Ref AMI
+      InstanceType: "t2.micro"
+      SubnetId: !Ref TestSubnet
+      BlockDeviceMappings:
+        - DeviceName: '/dev/xvda'
+          Ebs:
+            VolumeType: 'gp2'
+            VolumeSize: 8
+      Tags:
+        - Key: 'Name'
+          Value: 'public_a_sv'
+      SecurityGroupIds:
+        - !Ref TestSecurityGroup
+      KeyName: !Ref KeyPair
+
+#出力するパラメータ指定
