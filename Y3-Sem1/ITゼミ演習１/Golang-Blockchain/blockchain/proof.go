@@ -5,11 +5,12 @@ import (
 	"crypto/sha256"
 	"encoding/binary"
 	"fmt"
+	"log"
 	"math"
 	"math/big"
 )
 
-// take the date from the block
+// Take the data from the block
 
 // create a counter (nonce) which starts at 0
 
@@ -17,7 +18,7 @@ import (
 
 // check the hash to see if it meets a set of requirements
 
-// Requirments:
+// Requirements:
 // The First few bytes must contain 0s
 
 const Difficulty = 18
@@ -30,7 +31,9 @@ type ProofOfWork struct {
 func NewProof(b *Block) *ProofOfWork {
 	target := big.NewInt(1)
 	target.Lsh(target, uint(256-Difficulty))
+
 	pow := &ProofOfWork{b, target}
+
 	return pow
 }
 
@@ -44,6 +47,7 @@ func (pow *ProofOfWork) InitData(nonce int) []byte {
 		},
 		[]byte{},
 	)
+
 	return data
 }
 
@@ -65,15 +69,16 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 		} else {
 			nonce++
 		}
-	}
 
-	fmt.Println("")
+	}
+	fmt.Println()
 
 	return nonce, hash[:]
 }
 
 func (pow *ProofOfWork) Validate() bool {
 	var intHash big.Int
+
 	data := pow.InitData(pow.Block.Nonce)
 
 	hash := sha256.Sum256(data)
@@ -85,7 +90,10 @@ func (pow *ProofOfWork) Validate() bool {
 func ToHex(num int64) []byte {
 	buff := new(bytes.Buffer)
 	err := binary.Write(buff, binary.BigEndian, num)
-	Handle(err)
+	if err != nil {
+		log.Panic(err)
+
+	}
 
 	return buff.Bytes()
 }
