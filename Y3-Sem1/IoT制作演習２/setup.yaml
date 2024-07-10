@@ -1,0 +1,33 @@
+esphome:
+  name: brannsentral
+  on_boot:
+    then:
+      - logger.log: "Hello World"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "8E8C7A15"
+
+wifi:
+  ssid: "***"
+  password: "***"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Brannsentral Fallback Hotspot"
+    password: "EoZrlPFbjohy"
+
+captive_portal:
+    
+switch:
+  - platform: gpio
+    name: "Living room dehumidifier"
+    pin: 5

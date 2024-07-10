@@ -1,0 +1,165 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS Cloud
+
+Parameters:
+  KeyPair:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Select KeyPair Name.
+  AMI:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-minimal-kernel-default-x86_64'
+  #InstanceAZ:
+  #  Type: AWS::EC2::AvailabilityZone::Name
+  #  Description: Select AvailabilityZone Name.
+
+Resources:
+  #------------------------------------
+  #   VPC
+  #------------------------------------
+  eccVpc:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: '10.1.0.0/16'
+      Tags:
+        - Key: 'Name'
+          Value: 'ie3a_vpc'
+  #------------------------------------
+  #   subnet(public_a,public_b)
+  #------------------------------------
+  eccSubnet1:  
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      CidrBlock: '10.1.10.0/24'
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: us-east-1a
+      Tags:
+        - Key: 'Name'
+          Value: 'public_sub_a'
+      VpcId: !Ref eccVpc      
+  eccSubnet2:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      CidrBlock: '10.1.11.0/24'
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: us-east-1b
+      Tags:
+        - Key: 'Name'
+          Value: 'public_sub_b'
+      VpcId: !Ref eccVpc
+  #------------------------------------
+  #   IntenetGateway
+  #------------------------------------
+  eccInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: 'Name'
+        Value: 'ie3a-igw'
+  eccAttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref eccVpc
+      InternetGatewayId: !Ref eccInternetGateway
+  #------------------------------------
+  #   RouteTable,Route
+  #------------------------------------
+  eccRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: 'Name'
+          Value: 'ie3a_rt'
+      VpcId: !Ref eccVpc
+  eccRoute:
+    Type: AWS::EC2::Route
+    DependsOn: eccInternetGateway
+    Properties:
+      RouteTableId: !Ref eccRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref eccInternetGateway
+  #------------------------------------
+  #   subunet assosication 
+  #------------------------------------
+  eccSubnetRouteTableAssociation1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref eccSubnet1
+      RouteTableId: !Ref eccRouteTable
+  eccSubnetRouteTableAssociation2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref eccSubnet2
+      RouteTableId: !Ref eccRouteTable
+  #------------------------------------
+  #   EC2 instance
+  #------------------------------------
+  eccEC2Instance1:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !Ref AMI
+      InstanceType: "t2.micro"
+      SubnetId: !Ref eccSubnet1
+      BlockDeviceMappings:
+        - DeviceName: '/dev/xvda'
+          Ebs:
+            VolumeType: 'gp2'
+            VolumeSize: 8
+      Tags:
+        - Key: 'Name'
+          Value: 'ie3a_public_a'
+      SecurityGroupIds:
+        - !Ref eccSecurityGroup
+      KeyName: !Ref KeyPair
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          yum -y install httpd
+          systemctl enable httpd
+          yum -y install php php-fpm php-mysqli php-json php-devel
+          systemctl start httpd
+          echo "<?php phpinfo(); ?>" > /var/www/html/test.php
+  eccEC2Instance2:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !Ref AMI
+      InstanceType: "t2.micro"
+      SubnetId: !Ref eccSubnet2
+      BlockDeviceMappings:
+        - DeviceName: '/dev/xvda'
+          Ebs:
+            VolumeType: 'gp2'
+            VolumeSize: 8
+      Tags:
+        - Key: 'Name'
+          Value: 'ie3a_public_b'
+      SecurityGroupIds:
+        - !Ref eccSecurityGroup
+      KeyName: !Ref KeyPair
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          yum -y install httpd
+          systemctl enable httpd
+          yum -y install php php-fpm php-mysqli php-json php-devel
+          systemctl start httpd
+          echo "<?php phpinfo(); ?>" > /var/www/html/test.php
+  #------------------------------------
+  #   Security Group
+  #------------------------------------
+  eccSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "eccSecurityGroup"
+      VpcId: !Ref eccVpc
+      Tags:
+        - Key: 'Name'
+          Value: 'ie3a-sg'
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '22'
+        ToPort: '22'
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: '80'
+        ToPort: '80'
+        CidrIp: 0.0.0.0/0

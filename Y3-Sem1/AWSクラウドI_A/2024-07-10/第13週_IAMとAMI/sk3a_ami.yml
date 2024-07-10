@@ -1,0 +1,105 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS Cloud
+
+Parameters:
+  KeyPair:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Select KeyPair Name.
+  #InstanceAZ:
+  #  Type: AWS::EC2::AvailabilityZone::Name
+  #  Description: Select AvailabilityZone Name.
+  #AMI
+  AMI:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-minimal-kernel-default-x86_64'
+
+Resources:
+  eccVpc:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: '10.11.0.0/16'
+      Tags:
+        - Key: 'Name'
+          Value: 'sk3a_vpc_ami'
+  eccSubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      CidrBlock: '10.11.10.0/24'
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: 'Name'
+          Value: 'websv'
+      VpcId: !Ref eccVpc
+  eccInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: 'Name'
+        Value: 'sk3a-igw'
+  eccAttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref eccVpc
+      InternetGatewayId: !Ref eccInternetGateway
+  eccRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: 'Name'
+          Value: 'sk3a_rt'
+      VpcId: !Ref eccVpc
+  eccRoute:
+    Type: AWS::EC2::Route
+    DependsOn: eccInternetGateway
+    Properties:
+      RouteTableId: !Ref eccRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref eccInternetGateway
+  eccSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref eccSubnet
+      RouteTableId: !Ref eccRouteTable
+  eccEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !Ref AMI
+      #SAvailabilityZone: !Ref InstanceAZ
+      InstanceType: "t2.micro"
+      SubnetId: !Ref eccSubnet
+      BlockDeviceMappings:
+        - DeviceName: '/dev/xvda'
+          Ebs:
+            VolumeType: 'gp2'
+            VolumeSize: 8
+      Tags:
+        - Key: 'Name'
+          Value: 'websv'
+      SecurityGroupIds:
+        - !Ref eccSecurityGroup
+      KeyName: !Ref KeyPair
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          yum -y install httpd
+          systemctl enable httpd
+          yum -y install php php-fpm php-mysqli php-json php-devel
+          systemctl start httpd
+          echo "<?php phpinfo(); ?>" > /var/www/html/test.php 
+  eccSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "eccSecurityGroup"
+      VpcId: !Ref eccVpc
+      Tags:
+        - Key: 'Name'
+          Value: 'sk3a-sg'
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '22'
+        ToPort: '22'
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: '80'
+        ToPort: '80'
+        CidrIp: 0.0.0.0/0
