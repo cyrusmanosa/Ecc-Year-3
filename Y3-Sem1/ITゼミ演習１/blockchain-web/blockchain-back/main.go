@@ -15,7 +15,6 @@ const (
 
 func main() {
 	validateArgs()
-
 	switch os.Args[1] {
 	case "command":
 		controllers.Cli()

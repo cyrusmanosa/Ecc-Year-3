@@ -3,6 +3,7 @@ package controllers
 import (
 	"blockchain-back/blockchain"
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -95,7 +96,6 @@ func (cli *CommandLine) PrintChainForConfirm() {
 }
 
 func TakeBlock(c *gin.Context, CusName string) []byte {
-
 	chain := blockchain.InitBlockChainForGuest()
 	defer chain.Database.Close()
 	cli := CommandLine{chain}
@@ -129,7 +129,9 @@ func TakeBlock(c *gin.Context, CusName string) []byte {
 		dataName, _ := dataMap["name"].(string)
 		dataCv, _ := dataMap["cv"].(string)
 		if dataName == CusName {
-			return []byte(dataCv)
+			svgBase64, _ := base64.StdEncoding.DecodeString(dataCv)
+
+			return svgBase64
 		}
 
 		if len(block.PrevHash) == 0 {

@@ -21,16 +21,16 @@ func Gin(in, out string, filePath []byte) {
 	// /----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	r.GET("/png", func(c *gin.Context) {
 		html := ` 
-	<!DOCTYPE html>
-	<html>
-	<head>
-	<title>Image Display</title>
-	</head>
-	<body>
-	<h1>Image</h1>
-	<img src="/imageTest" />
-	</body>
-	</html>`
+		<!DOCTYPE html>
+		<html>
+		<head>
+		<title>Image Display</title>
+		</head>
+		<body>
+		<h1>Image</h1>
+		<img src="/imageTest" />
+		</body>
+		</html>`
 		// Write the HTML response
 		c.Header("Content-Type", "text/html")
 		c.String(http.StatusOK, html)
@@ -44,18 +44,16 @@ func Gin(in, out string, filePath []byte) {
 	r.GET("/svg/:Cname", func(c *gin.Context) {
 		Cname := c.Param("Cname")
 		Svg := controllers.TakeBlock(c, Cname)
-		c.Header("Content-Type", "image/svg+xml")
-		c.Data(http.StatusOK, "image/svg+xml", Svg)
+		c.Header("Content-Type", "svg+xml")
+		c.Data(http.StatusOK, "svg+xml", Svg)
 	})
 
 	r.GET("/image", func(c *gin.Context) {
-		c.Header("Content-Type", "image/png")
-		c.Data(http.StatusOK, "image/png", svgData)
+		c.Header("Content-Type", "svg+xml")
+		c.Data(http.StatusOK, "svg+xml", svgData)
 	})
-
 	r.PUT("/take", controllers.AddBlockForGin)
-	r.Any("/Check/:name", controllers.AddBlockForGinConfirm)
-
+	r.POST("/Check/:name", controllers.AddBlockForGinConfirm)
 	fmt.Println("Starting server at :8080")
 	log.Fatal(r.Run(":8080"))
 }
