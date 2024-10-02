@@ -36,8 +36,8 @@ func PngToSvg() []byte {
 }
 
 func PdfToSvg(pdfPath string, svgPath string) []byte {
-	cmd := exec.Command("pdf2svg", pdfPath, svgPath, "1")
 	var stderr bytes.Buffer
+	cmd := exec.Command("pdf2svg", pdfPath, svgPath, "1")
 	cmd.Stderr = &stderr
 	err := cmd.Run()
 	if err != nil {

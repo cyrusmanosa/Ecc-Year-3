@@ -14,7 +14,10 @@ const (
 )
 
 func main() {
-	validateArgs()
+	if len(os.Args) < 2 {
+		runtime.Goexit()
+	}
+
 	switch os.Args[1] {
 	case "command":
 		controllers.Cli()
@@ -22,12 +25,6 @@ func main() {
 		data := dsl.PngToSvg()
 		server.Gin(pdfPath, svgPath, data)
 	default:
-		runtime.Goexit()
-	}
-}
-
-func validateArgs() {
-	if len(os.Args) < 2 {
 		runtime.Goexit()
 	}
 }
