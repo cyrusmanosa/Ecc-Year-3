@@ -4,6 +4,7 @@ import (
 	"blockchain-back/controllers"
 	"blockchain-back/dsl"
 	"blockchain-back/server"
+	_ "net/http/pprof"
 	"os"
 	"runtime"
 )
