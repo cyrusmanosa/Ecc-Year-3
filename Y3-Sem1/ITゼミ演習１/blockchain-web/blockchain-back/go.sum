@@ -9,6 +9,10 @@ github.com/cloudwego/base64x v0.1.4/go.mod h1:0zlkT4Wn5C6NdauXdJRhSKRlJvmclQ1hhJ
 github.com/cloudwego/iasm v0.2.0 h1:1KNIy1I1H9hNNFEEH3DVnI4UujN+1zjpuk6gwHLTssg=
 github.com/cloudwego/iasm v0.2.0/go.mod h1:8rXZaNYT2n95jn+zTI1sDr+IgcD2GVs0nlbbQPiEFhY=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
+github.com/cyrusmanosa/Toolkit v1.0.0 h1:WOq3Zzq7zW1lS2P0O0MmLzQDopH1uoJvGBoKDsUGlzw=
+github.com/cyrusmanosa/Toolkit v1.0.0/go.mod h1:zpQ/F3IR9KE2/6sDUkGr0ie1QnrPXbQjS85nUGrwRwk=
+github.com/cyrusmanosa/Toolkit/v2 v2.0.0 h1:em/Kcg2/m95XcehXqB3nRJBORdHvxIwW/wm2ncothr4=
+github.com/cyrusmanosa/Toolkit/v2 v2.0.0/go.mod h1:WZS/CjZNkYwugbJx3yCAA1j+8Q9OrSGUIgxpy/Eiy3o=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

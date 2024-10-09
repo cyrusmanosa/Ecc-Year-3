@@ -49,10 +49,6 @@ func AddBlockForGin(ctx *gin.Context) {
 	cli.PrintChain()
 }
 
-func ErrorResponse(err error) gin.H {
-	return gin.H{"error": err.Error()}
-}
-
 func AddBlockForGinConfirm(ctx *gin.Context) {
 	rspName := ctx.Param("name")
 
@@ -117,4 +113,8 @@ func AddBlockForGinConfirm(ctx *gin.Context) {
 			break
 		}
 	}
+}
+
+func ErrorResponse(err error) gin.H {
+	return gin.H{"error": err.Error()}
 }

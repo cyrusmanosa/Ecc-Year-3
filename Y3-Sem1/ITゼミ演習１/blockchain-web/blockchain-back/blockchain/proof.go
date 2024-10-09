@@ -40,16 +40,17 @@ func (pow *ProofOfWork) InitData(nonce int) []byte {
 	return data
 }
 
+// /----------------------------- *********** -----------------------------------
 func (pow *ProofOfWork) Run() (int, []byte) {
 	var intHash big.Int
 	var hash [32]byte
 
 	nonce := 0
 
+	fmt.Println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
 	for nonce < math.MaxInt64 {
 		data := pow.InitData(nonce)
 		hash = sha256.Sum256(data)
-
 		fmt.Printf("\r%x", hash)
 		intHash.SetBytes(hash[:])
 
@@ -58,12 +59,14 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 		} else {
 			nonce++
 		}
-
 	}
 	fmt.Println()
+	fmt.Println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
 
 	return nonce, hash[:]
 }
+
+///----------------------------- *********** -----------------------------------
 
 func (pow *ProofOfWork) Validate() bool {
 	var intHash big.Int
