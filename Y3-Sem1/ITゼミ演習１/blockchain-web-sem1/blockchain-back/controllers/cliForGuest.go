@@ -36,6 +36,7 @@ func AddBlockForGin(ctx *gin.Context) {
 	var req models.InputData
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ErrorResponse(err))
+		log.Println(req)
 		return
 	}
 

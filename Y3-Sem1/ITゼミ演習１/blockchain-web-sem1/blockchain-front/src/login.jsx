@@ -10,7 +10,6 @@ export default function InputWithIcon() {
     const [email, setEmail] = useState('')
     const [company_name, setCompanyName] = useState('')
     const [message, setMessage] = useState('')
-    const [uploadedFiles, setUploadedFiles] = useState([]); // 新增状态以存储上传的文件
 
     const handleName = useCallback((e) => {
         setName(e.target.value);
@@ -28,26 +27,18 @@ export default function InputWithIcon() {
         setMessage(e.target.value);
     }, []);
 
-    const handleFileChange = (e) => { // 新增文件处理函数
-        setUploadedFiles(e.target.files);
-    };
 
     const handleSendData = async () => {
         const data = {
             name,
             email,
             company_name,
-            message,
-            files: uploadedFiles // 将文件添加到数据中
+            message
         };
-        const formData = new FormData(); // 创建 FormData 对象
-        for (const file of uploadedFiles) {
-            formData.append('files', file); // 将每个文件添加到 FormData
-        }
-        formData.append('data', JSON.stringify(data)); // 将其他数据添加到 FormData
-        await axios.put("http://localhost:8080/take", formData, {
+
+        await axios.put("http://localhost:8080/take", data, {
             headers: {
-                'Content-Type': 'multipart/form-data' // 设置请求头
+                'Content-Type': 'application/json'
             }
         });
     }
@@ -114,13 +105,8 @@ export default function InputWithIcon() {
                 value={message}
                 onChange={handleMessage}
             />
-            <input
-                type="file"
-                id="fileUpload"
-                name="uploaded"
-                multiple
-                onChange={handleFileChange} // 更新文件处理函数
-            />
+
+            <br />
             <button onClick={handleSendData}>Submit</button>
         </Box>
     );
