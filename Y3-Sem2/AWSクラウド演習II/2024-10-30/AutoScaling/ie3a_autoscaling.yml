@@ -1,0 +1,152 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS Cloud
+
+Parameters:
+  KeyPair:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Select KeyPair Name.
+  #InstanceAZ:
+  #  Type: AWS::EC2::AvailabilityZone::Name
+  #  Description: Select AvailabilityZone Name.
+  AMI:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'  
+
+Resources:
+  eccVpc:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: '10.1.0.0/16'
+      Tags:
+        - Key: 'Name'
+          Value: 'ie3a_vpc'
+  eccSubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      CidrBlock: '10.1.10.0/24'
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: 'Name'
+          Value: 'ie3a_pub_a'
+      VpcId: !Ref eccVpc
+      AvailabilityZone: 
+        Fn::Select: 
+          - 0
+          - Fn::GetAZs: ""
+  eccSubnet2:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      CidrBlock: '10.1.11.0/24'
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: 'Name'
+          Value: 'ie3a_pub_b'
+      VpcId: !Ref eccVpc
+      AvailabilityZone: 
+        Fn::Select: 
+          - 1
+          - Fn::GetAZs: ""
+  eccInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: 'Name'
+        Value: 'ie3a-igw'
+  eccAttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref eccVpc
+      InternetGatewayId: !Ref eccInternetGateway
+  eccRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: 'Name'
+          Value: 'ie3a_rt'
+      VpcId: !Ref eccVpc
+  eccRoute:
+    Type: AWS::EC2::Route
+    DependsOn: eccInternetGateway
+    Properties:
+      RouteTableId: !Ref eccRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref eccInternetGateway
+  eccSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref eccSubnet
+      RouteTableId: !Ref eccRouteTable
+  eccSubnetRouteTableAssociation2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref eccSubnet2
+      RouteTableId: !Ref eccRouteTable
+  eccEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !Ref AMI
+      #SAvailabilityZone: !Ref InstanceAZ
+      InstanceType: "t2.micro"
+      SubnetId: !Ref eccSubnet
+      BlockDeviceMappings:
+        - DeviceName: '/dev/xvda'
+          Ebs:
+            VolumeType: 'gp2'
+            VolumeSize: 8
+      Tags:
+        - Key: 'Name'
+          Value: 'ie3a_pub_a'
+      SecurityGroupIds:
+        - !Ref eccSecurityGroup
+      KeyName: !Ref KeyPair
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          yum -y install httpd
+          systemctl enable httpd
+          yum -y install php php-fpm php-json php-devel php-mysqli
+          systemctl start httpd
+          echo "<h1>Hello AWS!!</h1>" > /var/www/html/hello.html 
+  eccEC2Instance2:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !Ref AMI
+      #SAvailabilityZone: !Ref InstanceAZ
+      InstanceType: "t2.micro"
+      SubnetId: !Ref eccSubnet2
+      BlockDeviceMappings:
+        - DeviceName: '/dev/xvda'
+          Ebs:
+            VolumeType: 'gp2'
+            VolumeSize: 8
+      Tags:
+        - Key: 'Name'
+          Value: 'ie3a_pub_b'
+      SecurityGroupIds:
+        - !Ref eccSecurityGroup
+      KeyName: !Ref KeyPair
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          yum -y install httpd
+          systemctl enable httpd
+          yum -y install php php-fpm php-mysqli php-devel php-json        
+          systemctl start httpd
+          echo "<h1>Hello AWS!!</h1>" > /var/www/html/hello.html 
+  eccSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "eccSecurityGroup"
+      VpcId: !Ref eccVpc
+      Tags:
+        - Key: 'Name'
+          Value: 'ie3a-sg'
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '22'
+        ToPort: '22'
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: '80'
+        ToPort: '80'
+        CidrIp: 0.0.0.0/0
