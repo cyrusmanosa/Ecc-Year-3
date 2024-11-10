@@ -1,0 +1,16 @@
+﻿■DBの作成
+create database クラス名_db;
+use クラス名_db;
+
+■テーブル作成
+CREATE TABLE `shohins` (
+  `sid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `scategory` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sphoto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sprice` int(11) NOT NULL DEFAULT '0'
+);
+
+■データ追加
+INSERT INTO `shohins` VALUES ('c006','クリスマスプディング','ホール','cake01.jpg',2000),('c0002','ブッシュド・ノエル','シートケーキ','cake02.jpg',250),('c0003','イチゴとシブースドケーキ','ショートケーキ','cake03.jpg',400);
+
