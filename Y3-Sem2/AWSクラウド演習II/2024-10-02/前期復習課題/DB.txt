@@ -1,6 +1,6 @@
 ■DBの作成
-create database クラス名_db;
-use クラス名_db;
+create database sk3a_db;
+use sk3a_db;
 
 ■テーブル作成
 CREATE TABLE `products` (
