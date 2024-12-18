@@ -2,7 +2,7 @@
 //header('charset=utf-8');
 $number = 1001;
 //Web APIのURL
-$url = 'API GatewayのURL(endpoint)?pid=' . $number;
+$url = 'https://yxyd6cew2f.execute-api.us-east-1.amazonaws.com/default/sk3a04-cake-function?pid=' . $number;
 //APIのJSONファイルを取得
 $apidata = file_get_contents($url);
 $data = json_decode($apidata, true);
