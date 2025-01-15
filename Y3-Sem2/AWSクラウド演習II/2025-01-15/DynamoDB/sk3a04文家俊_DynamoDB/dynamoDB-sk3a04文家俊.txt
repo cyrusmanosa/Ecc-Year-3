@@ -1,0 +1,33 @@
+import boto3
+
+def lambda_handler(event, context):
+  dynamodb = boto3.resource('dynamodb')
+  #テーブル名の指定
+  table = dynamodb.Table('sk3a04-cake-table')
+  #追加処理
+  
+  #データ取得
+  pid = event['pid']
+  pname = event['pname']
+  category = event['category']
+  price = event['price']
+  #追加データの作成
+  addtional_item = {
+    'pid': pid,
+    'pname': pname,
+    'category': category,
+    'price': price
+  }
+  #テーブルへデータを追加
+  ret = table.put_item(Item=addtional_item)
+
+  
+
+  #データの抽出(全件)
+  res = table.scan()
+  items = res['Items']
+  #print(res)
+  for i in items:
+    print('name:{} category{} price:{}'.format(i['pname'],i['category'],i['price']))
+    
+    
