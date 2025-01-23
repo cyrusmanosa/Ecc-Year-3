@@ -1,0 +1,13 @@
+import boto3
+from boto3.dynamodb.conditions import Key, Attr
+
+dynamodb = boto3.resource('dynamodb')
+ 
+def lambda_handler(event, context):
+    table_name = "ecc-cake-table"
+    partition_key = {"pid": event["pid"]}
+    dynamotable = dynamodb.Table(table_name)
+    res = dynamotable.get_item(Key=partition_key)
+    item = res["Item"]
+    
+    return item
