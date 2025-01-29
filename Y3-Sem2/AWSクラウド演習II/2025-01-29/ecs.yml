@@ -1,0 +1,172 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS Cloud
+
+#-------------------------------------
+#   Meta Data
+#-------------------------------------
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      -
+        Label:
+          default: Envrionment
+        Parameters:
+          - LabName
+      -
+        Label:
+          default: Network Configuration
+        Parameters:
+          - VPCCidr
+          - PublicSubnet01Cidr
+          - PublicSubnet02Cidr
+      -
+        Label:
+          default: EC2 Configuration
+        Parameters:
+          - Ec2ImageId
+          - KeyPair
+
+#-------------------------------------
+#   Parameters
+#-------------------------------------
+Parameters:
+  LabName:
+    Type: String
+    AllowedValues:
+      - ie3a
+      - ie3b
+      - sk3a
+      - sk3b
+  VPCCidr:
+    Type: String
+    Default: "10.2.0.0/16"
+  PublicSubnet01Cidr:
+    Type: String
+    Default: "10.2.1.0/24"
+  PublicSubnet02Cidr:
+    Type: String
+    Default: "10.2.2.0/24"
+  KeyPair:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Select KeyPair Name.
+  # Ec2ImageId:
+  #   Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+  #   Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-minimal-kernel-default-x86_64'
+
+#-------------------------------------
+#   Resources
+#-------------------------------------
+Resources:
+
+#-------------------------------------
+#   VPC
+#-------------------------------------
+  Vpc:
+    Type: "AWS::EC2::VPC"
+    Properties:
+      CidrBlock: !Ref VPCCidr
+      Tags:
+        - Key: Name
+          Value: !Sub "${LabName}_ecs_vpc"
+#-------------------------------------
+#   Internet Gateway
+#-------------------------------------
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: 'Name'
+        Value: !Sub "${LabName}_ecs_igw"
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref Vpc
+      InternetGatewayId: !Ref InternetGateway
+
+#-------------------------------------
+#   Subnet
+#-------------------------------------
+  Subnet1:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      CidrBlock: !Ref  PublicSubnet01Cidr
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: 'Name'
+          Value: !Sub '${LabName}_pub_sub'
+      VpcId: !Ref Vpc
+      AvailabilityZone: !Select [ 0, !GetAZs '']
+  Subnet2:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      CidrBlock: !Ref  PublicSubnet02Cidr
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: 'Name'
+          Value: !Sub '${LabName}_pub_sub2'
+      VpcId: !Ref Vpc
+      AvailabilityZone: !Select [ 1, !GetAZs '']
+  
+
+#-------------------------------------
+#   Route table
+#-------------------------------------
+  RouteTable1:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: 'Name'
+          Value: !Sub '${LabName}_ecs_rt'
+      VpcId: !Ref Vpc
+  Route1:
+    Type: AWS::EC2::Route
+    DependsOn: InternetGateway
+    Properties:
+      RouteTableId: !Ref RouteTable1
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+  SubnetRouteTableAssociation1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref Subnet1
+      RouteTableId: !Ref RouteTable1
+  RouteTable2:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: 'Name'
+          Value: !Sub '${LabName}_ecs_rt2'
+      VpcId: !Ref Vpc
+  Route2:
+    Type: AWS::EC2::Route
+    DependsOn: InternetGateway
+    Properties:
+      RouteTableId: !Ref RouteTable2
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+  SubnetRouteTableAssociation2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref Subnet2
+      RouteTableId: !Ref RouteTable2
+
+#-------------------------------------
+#   Security Group
+#-------------------------------------    
+  IngressSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "eccSecurityGroup"
+      VpcId: !Ref Vpc
+      Tags:
+        - Key: 'Name'
+          Value: !Sub '${LabName}_ecs_websg'
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '22'
+        ToPort: '22'
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: '80'
+        ToPort: '80'
+        CidrIp: 0.0.0.0/0
