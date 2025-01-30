@@ -11,7 +11,7 @@
     </tr>
     <tr>
       <td align="center">02</td>
-      <td align="center">EC2 ラボ３（復習）</td>
+      <td align="center">EC2復習</td>
     </tr>
     <tr>
       <td align="center">03</td>
@@ -31,11 +31,11 @@
     </tr>
     <tr>
       <td align="center">07</td>
-      <td align="center">RDS構築（復習）</td>
+      <td align="center">RDS復習</td>
     </tr>
     <tr>
       <td align="center">08</td>
-      <td align="center">復習</td>
+      <td align="center">復習課題</td>
     </tr>
     <tr>
       <td align="center">09</td>
