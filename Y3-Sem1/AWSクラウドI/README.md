@@ -23,7 +23,7 @@
     </tr>
     <tr>
       <td align="center">05</td>
-      <td align="center">CloudFormationで HTTP、PHP、MariaDB 環境構築</td>
+      <td align="center">CloudFormation</td>
     </tr>
     <tr>
       <td align="center">06</td>
